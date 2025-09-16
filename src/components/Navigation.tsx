@@ -9,13 +9,23 @@ import {
   Settings,
   Menu,
   X,
-  GraduationCap
+  GraduationCap,
+  LogIn,
+  LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AuthService } from "@/services/auth";
+import AuthModal from "./AuthModal";
+import ApiSettings from "./ApiSettings";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(AuthService.isAuthenticated());
+  const currentUser = AuthService.getCurrentUser();
 
   const navItems = [
     { name: "Dashboard", href: "/", icon: Home },
@@ -62,10 +72,49 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Settings */}
-            <Button variant="ghost" size="sm">
-              <Settings className="h-4 w-4" />
-            </Button>
+            {/* Auth and Settings */}
+            <div className="flex items-center space-x-2">
+              {isAuthenticated ? (
+                <>
+                  <span className="text-sm text-muted-foreground">
+                    Hi, {currentUser?.full_name?.split(' ')[0]}
+                  </span>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => {
+                      AuthService.logout();
+                      setIsAuthenticated(false);
+                      window.location.reload();
+                    }}
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </>
+              ) : (
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setIsAuthModalOpen(true)}
+                >
+                  <LogIn className="h-4 w-4" />
+                </Button>
+              )}
+              
+              <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl">
+                  <DialogHeader>
+                    <DialogTitle>API Settings</DialogTitle>
+                  </DialogHeader>
+                  <ApiSettings />
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </div>
       </nav>
@@ -125,6 +174,15 @@ const Navigation = () => {
             </div>
           </div>
         )}
+
+        <AuthModal 
+          isOpen={isAuthModalOpen} 
+          onClose={() => setIsAuthModalOpen(false)}
+          onSuccess={() => {
+            setIsAuthenticated(true);
+            window.location.reload();
+          }}
+        />
       </div>
     </>
   );
