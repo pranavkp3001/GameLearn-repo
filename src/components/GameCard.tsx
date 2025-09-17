@@ -22,6 +22,7 @@ interface GameCardProps {
   achievements?: number;
   completed?: boolean;
   className?: string;
+  path?: string;
   onPlay?: () => void;
 }
 
@@ -36,6 +37,7 @@ const GameCard = ({
   achievements = 0,
   completed = false,
   className,
+  path,
   onPlay
 }: GameCardProps) => {
   const difficultyColors = {

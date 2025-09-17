@@ -174,16 +174,17 @@ const Navigation = () => {
             </div>
           </div>
         )}
-
-        <AuthModal 
-          isOpen={isAuthModalOpen} 
-          onClose={() => setIsAuthModalOpen(false)}
-          onSuccess={() => {
-            setIsAuthenticated(true);
-            window.location.reload();
-          }}
-        />
       </div>
+
+      {/* Auth modal (rendered for all viewports) */}
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={() => {
+          setIsAuthenticated(true);
+          window.location.reload();
+        }}
+      />
     </>
   );
 };

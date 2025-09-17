@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +19,7 @@ const Games = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const categories = [
     { id: "all", name: "All Games", icon: Gamepad2 },
@@ -28,6 +30,42 @@ const Games = () => {
   ];
 
   const games = [
+    {
+      title: "Math Shooter — Faster Bubbles",
+      subject: "Mathematics", 
+      difficulty: "Medium" as const,
+      duration: "8 min",
+      players: 127,
+      rating: 4.8,
+      progress: 0,
+      achievements: 0,
+      category: "mathematics",
+      path: "/games/math-shooter"
+    },
+    {
+      title: "Pikachu Science Survival",
+      subject: "Science", 
+      difficulty: "Medium" as const,
+      duration: "12 min",
+      players: 89,
+      rating: 4.7,
+      progress: 0,
+      achievements: 0,
+      category: "science",
+      path: "/games/pikachu-science"
+    },
+    {
+      title: "Historical Dates Gun Shooting",
+      subject: "History", 
+      difficulty: "Medium" as const,
+      duration: "10 min",
+      players: 45,
+      rating: 4.9,
+      progress: 0,
+      achievements: 0,
+      category: "history",
+      path: "/games/history-shooting"
+    },
     {
       title: "Math Masters",
       subject: "Mathematics", 
@@ -237,7 +275,13 @@ const Games = () => {
                   <GameCard
                     key={index}
                     {...gameProps}
-                    onPlay={() => console.log(`Playing ${game.title}`)}
+                    onPlay={() => {
+                      if (game.path) {
+                        navigate(game.path);
+                      } else {
+                        console.log(`Playing ${game.title}`);
+                      }
+                    }}
                     className="animate-fade-in"
                   />
                 );
