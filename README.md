@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Welcome to your Lovable project
 
 ## Project info
@@ -71,3 +72,7 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+=======
+# GameLearn-repo
+A gamified learning platform built for the SIH Hackathon that makes education fun and engaging. It uses points, levels, badges, and leaderboards to motivate learners, while AI personalizes lessons and tracks progress. Built with React, Node.js, MongoDB, and TailwindCSS.
+>>>>>>> 0524e65e6c7bd7dcbba59f5be6215412f7bc7773
